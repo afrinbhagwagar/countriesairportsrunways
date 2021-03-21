@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<script src="/js/lib/angular.min.js"></script>
+<script src="/js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="/js/app/app2.js"></script>
+<script src="/js/app/accenturecontroller2.js"></script>
+<script src="/js/app/accentureservice.js"></script>
+
+<head>
+<style>
+#dynamicTopTenTable {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#dynamicTopTenTable td, #dynamicTopTenTable th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#dynamicTopTenTable tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#dynamicTopTenTable tr:hover {
+	background-color: #ddd;
+}
+
+#dynamicTopTenTable th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #4CAF50;
+	color: white;
+}
+
+.button1 {
+	background-color: #4CAF50;
+	padding: 10px 10px;
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 15px;
+}
+</style>
+<title>Search by Country</title>
+</head>
+<body ng-app="accentureindex2" ng-controller="accenturecontroller2">
+	<form >
+		<table id="dynamicRunwaysByCountry" hidden="true">
+			<tr>
+				<th>COUNTRY CODE</th>
+				<th>COUNTRY NAME</th>
+				<th>AIRPORT IDENTITY</th>
+				<th>AIRPORT TYPE</th>
+				<th>AIRPORT NAME</th>
+				<th>RUNWAY ID</th>
+				<th>RUNWAY SURFACE</th>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

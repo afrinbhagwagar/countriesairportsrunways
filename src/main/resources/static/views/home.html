@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.button1 {
+	background-color: #4CAF50;
+	padding: 10px 10px;
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 15px;
+}
+</style>
+<title>Countries, Airports and Runways</title>
+</head>
+<body>
+	<input type="text" id="countryName" />
+	<button id="searchByCountry" class="button1"
+		onclick="generateRunwaysByCountryName()">Search by Country</button>
+	<button id="topTen" class="button1" onclick="generateTopTenTable()">Top
+		10 Countries</button>
+	<script type="text/javascript">
+		document.getElementById("topTen").onclick = function() {
+			location.href = "/views/toptencountries.html";
+		};
+		document.getElementById("searchByCountry").onclick = function() {
+			location.href = "/views/runwaysbycountry.html?country='IN'";
+		};
+	</script>
+</body>
+</html>
