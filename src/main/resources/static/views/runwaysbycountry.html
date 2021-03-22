@@ -2,32 +2,31 @@
 <html>
 <script src="/js/lib/angular.min.js"></script>
 <script src="/js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
-<script src="/js/app/app2.js"></script>
-<script src="/js/app/accenturecontroller2.js"></script>
-<script src="/js/app/accentureservice.js"></script>
-
+<script src="/js/app/runwaysbycountryapp.js"></script>
+<script src="/js/app/runwaysbycountrycontroller.js"></script>
+<script src="/js/app/commonservice.js"></script>
 <head>
 <style>
-#dynamicTopTenTable {
+#dynamicRunwaysByCountry {
 	font-family: Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-#dynamicTopTenTable td, #dynamicTopTenTable th {
+#dynamicRunwaysByCountry td, #dynamicTopTenTable th {
 	border: 1px solid #ddd;
 	padding: 8px;
 }
 
-#dynamicTopTenTable tr:nth-child(even) {
+#dynamicRunwaysByCountry tr:nth-child(even) {
 	background-color: #f2f2f2;
 }
 
-#dynamicTopTenTable tr:hover {
+#dynamicRunwaysByCountry tr:hover {
 	background-color: #ddd;
 }
 
-#dynamicTopTenTable th {
+#dynamicRunwaysByCountry th {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	text-align: left;
@@ -46,9 +45,12 @@
 </style>
 <title>Search by Country</title>
 </head>
-<body ng-app="accentureindex2" ng-controller="accenturecontroller2">
-	<form >
-		<table id="dynamicRunwaysByCountry" hidden="true">
+<body ng-app="runwaysbycountryindex" ng-controller="runwaysbycountrycontroller">
+	<form>
+		<input type="text" id="countryEntered" class="countryEntered" /> <input
+			type="button" id="searchButton" ng-click="getRunwaysByCountry()"
+			value='Search' class="button1"><br /> <br />
+		<table id="dynamicRunwaysByCountry" class="dynamicRunwaysByCountry" hidden="true">
 			<tr>
 				<th>COUNTRY CODE</th>
 				<th>COUNTRY NAME</th>

@@ -2,9 +2,9 @@
 <html>
 <script src="/js/lib/angular.min.js"></script>
 <script src="/js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
-<script src="/js/app/app.js"></script>
-<script src="/js/app/accenturecontroller.js"></script>
-<script src="/js/app/accentureservice.js"></script>
+<script src="/js/app/toptenapp.js"></script>
+<script src="/js/app/toptencontroller.js"></script>
+<script src="/js/app/commonservice.js"></script>
 
 <head>
 <style>
@@ -46,7 +46,7 @@
 </style>
 <title>Top 10 Countries</title>
 </head>
-<body ng-app="accentureindex" ng-controller="accenturecontroller">
+<body ng-app="topTenIndex" ng-controller="toptencontroller">
 <form onload="getTopTenCountries()">
 	<table id="dynamicTopTenTable" hidden="true">
 		<tr>

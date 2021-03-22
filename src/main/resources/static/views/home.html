@@ -14,7 +14,6 @@
 <title>Countries, Airports and Runways</title>
 </head>
 <body>
-	<input type="text" id="countryName" />
 	<button id="searchByCountry" class="button1"
 		onclick="generateRunwaysByCountryName()">Search by Country</button>
 	<button id="topTen" class="button1" onclick="generateTopTenTable()">Top
@@ -24,7 +23,7 @@
 			location.href = "/views/toptencountries.html";
 		};
 		document.getElementById("searchByCountry").onclick = function() {
-			location.href = "/views/runwaysbycountry.html?country='IN'";
+			location.href = "/views/runwaysbycountry.html";
 		};
 	</script>
 </body>

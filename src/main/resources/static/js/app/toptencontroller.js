@@ -1,9 +1,9 @@
 'use strict'
-var module = angular.module('accenture.controllers', []);
-module.controller("accenturecontroller", [ "$scope", "accentureservice",
-		function($scope, accentureservice) {
-			accentureservice.getTopTenCountries().then(function() {
-				accentureservice.getTopTenCountries().then(function(value) {
+var module = angular.module('topten.controllers', []);
+module.controller("toptencontroller", [ "$scope", "commonservice",
+		function($scope, commonservice) {
+			commonservice.getTopTenCountries().then(function() {
+				commonservice.getTopTenCountries().then(function(value) {
 					$scope.topTenCountries = value.data;
 					var obj = value.data;
 					document.getElementById('dynamicTopTenTable').style.display = "table-cell";
@@ -27,7 +27,6 @@ module.controller("accenturecontroller", [ "$scope", "accentureservice",
 							var cell3 = row.insertCell(-1);
 							cell3.innerHTML = obj[itr[k]][i].airportName;
 							row.appendChild(cell3);
-
 						}
 					}
 					
@@ -37,6 +36,5 @@ module.controller("accenturecontroller", [ "$scope", "accentureservice",
 			}, function(reason) {
 				console.log("Error occured when calling top ten service.");
 			});
-			
 			
 		} ]);
