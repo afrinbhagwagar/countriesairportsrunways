@@ -28,10 +28,11 @@ public class Airports {
   private String wikipediaLink;
   private String keywords;
   
-  public Airports(String ident, String type, String name) {
+  public Airports(int id, String ident, String type, String name) {
+    this.id = id;
     this.ident = ident;
     this.type = type;
-    this.type = name;
+    this.name = name;
   }
 
 }

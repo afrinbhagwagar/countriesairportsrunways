@@ -5,7 +5,7 @@ module.controller("runwaysbycountrycontroller", [ "$scope", "commonservice",
 		console.log("Controller called for runways");
 		
 		$scope.getRunwaysByCountry = function() {
-			commonservice.getRunwaysByCountry().then(function() {
+			
 				commonservice.getRunwaysByCountry().then(function(value) {
 					$scope.runwaysByCountry = value.data;
 					var obj = value.data;
@@ -22,7 +22,7 @@ module.controller("runwaysbycountrycontroller", [ "$scope", "commonservice",
 						cell0.innerHTML = obj[k].countryCode;
 						row.appendChild(cell0);
 						var cell1 = row.insertCell(-1);
-						cell1.innerHTML = obj[k].countryCode;
+						cell1.innerHTML = obj[k].countryName;
 						row.appendChild(cell1);
 						var cell2 = row.insertCell(-1);
 						cell2.innerHTML = obj[k].airportIdentity;
@@ -41,14 +41,7 @@ module.controller("runwaysbycountrycontroller", [ "$scope", "commonservice",
 						row.appendChild(cell6);
 					}
 				}, function(reason) {
-					console.log("Error occured when getting all pits values function call.");
+					console.log("Error occured when getting runways by country.");
 				});
-			}, function(reason) {
-				console.log("Error occured when updating pits called.");
-			});
 		}	
-		
-		
-		
-		
 } ]);

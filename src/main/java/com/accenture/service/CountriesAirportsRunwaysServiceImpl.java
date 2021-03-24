@@ -29,19 +29,20 @@ import com.opencsv.exceptions.CsvValidationException;
 public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRunwaysService {
 
   private static Logger logger = LoggerFactory.getLogger(CountriesAirportsRunwaysServiceImpl.class);
-  
+
   @Override
   public List<ResponseByCountry> getListOfRunwaysByCountryCodeOrName(String country) throws IOException, CsvException {
 
     String[] countryCode = new String[] {""};
     String countryName = "";
     Optional<String[]> optOfCountry = CsvReaderHelper.getCsvReadOutput().stream()
-        .filter(x -> country.equalsIgnoreCase(x[1]) || country.equalsIgnoreCase(x[2])).findFirst();
+        .filter(x -> x[1].equalsIgnoreCase(country) || x[2].equalsIgnoreCase(country)).findFirst();
     if (optOfCountry.isPresent()) {
       countryCode[0] = optOfCountry.get()[1];
       countryName = optOfCountry.get()[2];
+      logger.debug("countryCode : {}, countryName : {}", countryCode, countryName);
     } else {
-      logger.warn("No value with country code/name : {}", country);
+      logger.warn("Country code/name is either null, empty or does not exist. Input : {}", country);
       return new ArrayList<>();
     }
 
@@ -50,8 +51,7 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
 
     allAirports.forEach(x -> {
       if (x[8].equalsIgnoreCase(countryCode[0])) {
-        listOfAirports.add(new Airports(Integer.parseInt(x[0]), x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9],
-            x[10], x[11], x[12], x[13], x[14], x[15], x[16], x[17]));
+        listOfAirports.add(new Airports(Integer.parseInt(x[0]), x[1], x[2], x[3]));
       }
     });
 
@@ -60,10 +60,9 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
 
   }
 
-  private List<ResponseByCountry> populateOutputByCountry(String[] countryCode,
-      String countryName, List<Airports> listOfAirports, File fileRunways)
-      throws IOException, CsvValidationException {
-    
+  private List<ResponseByCountry> populateOutputByCountry(String[] countryCode, String countryName,
+      List<Airports> listOfAirports, File fileRunways) throws IOException, CsvValidationException {
+
     List<ResponseByCountry> outputRunwaysByCountry = new ArrayList<>();
     try (CSVReader reader = new CSVReaderBuilder(new FileReader(fileRunways)).withSkipLines(1).build()) {
       String[] nextRunway;
@@ -83,7 +82,7 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
   @Override
   public Map<String, List<ResponseAirport>> getTopTenCountriesHavingMaxAirports()
       throws IOException, CsvValidationException {
-    
+
     File fileAirports = CsvReaderHelper.retrieveFile("com/accenture/airports.csv");
 
     Map<String, List<ResponseAirport>> mapOfAirports = new HashMap<>();
