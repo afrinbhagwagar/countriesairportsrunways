@@ -38,7 +38,7 @@ public class CountriesAirportsRunwaysServiceImplTest {
   
   @Test
   public void testTopTenPositiveScenario() throws CsvValidationException, IOException {
-    Map<String, List<ResponseAirport>> result = countriesAirportsRunwaysServiceImpl.getTopTenCountriesHavingMaxAirports();
+    Map<String, ResponseAirport> result = countriesAirportsRunwaysServiceImpl.getTopTenCountriesHavingMaxAirports();
     assertNotNull(result);
     assertEquals(10, result.size());
   }

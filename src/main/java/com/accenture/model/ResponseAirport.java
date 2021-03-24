@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ResponseAirport {
-  private String airportIdentity;
-  private String airportType;
-  private String airportName;
+  private String countryName;
+  private int totalNoAirports;
 }

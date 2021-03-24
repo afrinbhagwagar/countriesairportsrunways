@@ -36,7 +36,7 @@ public class CountriesAirportsRunwaysController {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/airports")
-  public Map<String, List<ResponseAirport>> getTopTenCountriesHavingMaxAirports() throws CsvValidationException, IOException {
+  public Map<String, ResponseAirport> getTopTenCountriesHavingMaxAirports() throws CsvValidationException, IOException {
     return countriesAirportsRunwaysService.getTopTenCountriesHavingMaxAirports();
 
   }

@@ -80,33 +80,35 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
   }
 
   @Override
-  public Map<String, List<ResponseAirport>> getTopTenCountriesHavingMaxAirports()
-      throws IOException, CsvValidationException {
+  public Map<String, ResponseAirport> getTopTenCountriesHavingMaxAirports() throws IOException, CsvValidationException {
 
     File fileAirports = CsvReaderHelper.retrieveFile("com/accenture/airports.csv");
 
-    Map<String, List<ResponseAirport>> mapOfAirports = new HashMap<>();
+    Map<String, ResponseAirport> mapOfAirports = new HashMap<>();
     try (CSVReader reader = new CSVReader(new FileReader(fileAirports))) {
-      String[] nextAirport;
+      String[] nextAirport = null;
       while ((nextAirport = reader.readNext()) != null) {
-        ResponseAirport airport = new ResponseAirport(nextAirport[1], nextAirport[2], nextAirport[3]);
-        if (mapOfAirports.get(nextAirport[8]) != null) {
-          mapOfAirports.get(nextAirport[8]).add(airport);
+        String countryCode = nextAirport[8];
+        if (mapOfAirports.get(countryCode) != null) {
+          mapOfAirports.get(countryCode).setTotalNoAirports(mapOfAirports.get(nextAirport[8]).getTotalNoAirports() + 1);
         } else {
-          List<ResponseAirport> list = new ArrayList<>();
-          list.add(airport);
-          mapOfAirports.put(nextAirport[8], list);
+          Optional<String[]> optOfCountry =
+              CsvReaderHelper.getCsvReadOutput().stream().filter(x -> x[1].equalsIgnoreCase(countryCode)).findFirst();
+          if (optOfCountry.isPresent()) {
+            mapOfAirports.put(nextAirport[8], new ResponseAirport(optOfCountry.get()[2], 1));
+          }
+
         }
       }
     }
 
-    Map<String, List<ResponseAirport>> sortMap = sortByValueCount(mapOfAirports);
+    Map<String, ResponseAirport> sortMap = sortByValueCount(mapOfAirports);
     return sortMap.entrySet().stream().limit(10).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 
-  private Map<String, List<ResponseAirport>> sortByValueCount(final Map<String, List<ResponseAirport>> homeListMap) {
+  private Map<String, ResponseAirport> sortByValueCount(final Map<String, ResponseAirport> homeListMap) {
     return homeListMap.entrySet().stream()
-        .sorted((e1, e2) -> Integer.compare(e2.getValue().size(), e1.getValue().size()))
+        .sorted((e1, e2) -> Integer.compare(e2.getValue().getTotalNoAirports(), e1.getValue().getTotalNoAirports()))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
   }
 }

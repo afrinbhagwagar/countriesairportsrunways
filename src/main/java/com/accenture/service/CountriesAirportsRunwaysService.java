@@ -13,6 +13,6 @@ public interface CountriesAirportsRunwaysService {
 
   List<ResponseByCountry> getListOfRunwaysByCountryCodeOrName(String country) throws IOException, CsvException ;
 
-  Map<String, List<ResponseAirport>> getTopTenCountriesHavingMaxAirports() throws IOException, CsvValidationException;
+  Map<String, ResponseAirport> getTopTenCountriesHavingMaxAirports() throws IOException, CsvValidationException;
 
 }
