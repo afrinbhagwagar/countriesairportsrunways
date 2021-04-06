@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 import com.accenture.model.Airports;
 import com.accenture.model.ResponseAirport;
 import com.accenture.model.ResponseByCountry;
+import com.accenture.service.exceptions.GenericApplicationException;
 import com.accenture.service.helper.CsvReaderHelper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvValidationException;
 
 @Service
@@ -31,7 +31,8 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
   private static Logger logger = LoggerFactory.getLogger(CountriesAirportsRunwaysServiceImpl.class);
 
   @Override
-  public List<ResponseByCountry> getListOfRunwaysByCountryCodeOrName(String country) throws IOException, CsvException {
+  public List<ResponseByCountry> getListOfRunwaysByCountryCodeOrName(String country)
+      throws GenericApplicationException {
 
     String[] countryCode = new String[] {""};
     String countryName = "";
@@ -46,6 +47,14 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
       return new ArrayList<>();
     }
 
+    List<Airports> listOfAirports = getListOfAirportsByCountry(countryCode);
+
+    File fileRunways = CsvReaderHelper.retrieveFile("com/accenture/runways.csv");
+    return populateOutputByCountry(countryCode, countryName, listOfAirports, fileRunways);
+
+  }
+
+  private List<Airports> getListOfAirportsByCountry(String[] countryCode) {
     List<String[]> allAirports = CsvReaderHelper.completeUrlAndFileRead("com/accenture/airports.csv");
     List<Airports> listOfAirports = new ArrayList<>();
 
@@ -54,14 +63,11 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
         listOfAirports.add(new Airports(Integer.parseInt(x[0]), x[1], x[2], x[3]));
       }
     });
-
-    File fileRunways = CsvReaderHelper.retrieveFile("com/accenture/runways.csv");
-    return populateOutputByCountry(countryCode, countryName, listOfAirports, fileRunways);
-
+    return listOfAirports;
   }
 
   private List<ResponseByCountry> populateOutputByCountry(String[] countryCode, String countryName,
-      List<Airports> listOfAirports, File fileRunways) throws IOException, CsvValidationException {
+      List<Airports> listOfAirports, File fileRunways) throws GenericApplicationException {
 
     List<ResponseByCountry> outputRunwaysByCountry = new ArrayList<>();
     try (CSVReader reader = new CSVReaderBuilder(new FileReader(fileRunways)).withSkipLines(1).build()) {
@@ -75,12 +81,20 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
               airport.get().getType(), airport.get().getName(), nextRunway[0], nextRunway[5]));
         }
       }
+    } catch (IOException ioExc) {
+      String message = "FileNotFoundException or IOException while readingCSV files : " + ioExc.getMessage();
+      logger.error(message);
+      throw new GenericApplicationException(message);
+    } catch (CsvValidationException csvExc) {
+      String message = "Error in reading/validating CSV file : " + csvExc.getMessage();
+      logger.error(message);
+      throw new GenericApplicationException(message);
     }
     return outputRunwaysByCountry;
   }
 
   @Override
-  public Map<String, ResponseAirport> getTopTenCountriesHavingMaxAirports() throws IOException, CsvValidationException {
+  public Map<String, ResponseAirport> getTopTenCountriesHavingMaxAirports() throws GenericApplicationException {
 
     File fileAirports = CsvReaderHelper.retrieveFile("com/accenture/airports.csv");
 
@@ -100,6 +114,14 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
 
         }
       }
+    } catch (IOException ioExc) {
+      String message = "FileNotFoundException or IOException while readingCSV files : " + ioExc.getMessage();
+      logger.error(message);
+      throw new GenericApplicationException(message);
+    } catch (CsvValidationException csvExc) {
+      String message = "Error in reading/validating CSV file : " + csvExc.getMessage();
+      logger.error(message);
+      throw new GenericApplicationException(message);
     }
 
     Map<String, ResponseAirport> sortMap = sortByValueCount(mapOfAirports);

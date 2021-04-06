@@ -8,7 +8,4 @@ public class GenericApplicationException extends Exception{
     super(message);
   }
 
-  public GenericApplicationException() {
-    super();
-  }
 }

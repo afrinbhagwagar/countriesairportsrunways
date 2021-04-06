@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.accenture.model.ResponseAirport;
 import com.accenture.model.ResponseByCountry;
-import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvValidationException;
+import com.accenture.service.exceptions.GenericApplicationException;
 
 @RunWith(SpringRunner.class)
 public class CountriesAirportsRunwaysServiceImplTest {
@@ -37,14 +35,14 @@ public class CountriesAirportsRunwaysServiceImplTest {
   private CountriesAirportsRunwaysServiceImpl countriesAirportsRunwaysServiceImpl;
   
   @Test
-  public void testTopTenPositiveScenario() throws CsvValidationException, IOException {
+  public void testTopTenPositiveScenario() throws GenericApplicationException {
     Map<String, ResponseAirport> result = countriesAirportsRunwaysServiceImpl.getTopTenCountriesHavingMaxAirports();
     assertNotNull(result);
     assertEquals(10, result.size());
   }
   
   @Test
-  public void testListOfRunwaysWhenCountryCodeOrNamePassedAndCompare() throws IOException, CsvException {
+  public void testListOfRunwaysWhenCountryCodeOrNamePassedAndCompare() throws GenericApplicationException {
     List<ResponseByCountry> resultFromCountryCode = countriesAirportsRunwaysServiceImpl.getListOfRunwaysByCountryCodeOrName("NL");
     assertNotNull(resultFromCountryCode);
     assertFalse(resultFromCountryCode.isEmpty());
@@ -57,21 +55,21 @@ public class CountriesAirportsRunwaysServiceImplTest {
   }
   
   @Test
-  public void testListOfRunwaysWhenCountryCodeOrNameIsNull() throws IOException, CsvException {
+  public void testListOfRunwaysWhenCountryCodeOrNameIsNull() throws GenericApplicationException {
     List<ResponseByCountry> resultFromNullCountryCode = countriesAirportsRunwaysServiceImpl.getListOfRunwaysByCountryCodeOrName(null);
     assertNotNull(resultFromNullCountryCode);
     assertTrue(resultFromNullCountryCode.isEmpty());
   }
   
   @Test
-  public void testListOfRunwaysWhenCountryCodeOrNameIsEmpty() throws IOException, CsvException {
+  public void testListOfRunwaysWhenCountryCodeOrNameIsEmpty() throws GenericApplicationException {
     List<ResponseByCountry> resultFromEmptyCountryCode = countriesAirportsRunwaysServiceImpl.getListOfRunwaysByCountryCodeOrName("");
     assertNotNull(resultFromEmptyCountryCode);
     assertTrue(resultFromEmptyCountryCode.isEmpty());
   }
   
   @Test
-  public void testListOfRunwaysWhenCountryCodeOrNameNotFound() throws IOException, CsvException {
+  public void testListOfRunwaysWhenCountryCodeOrNameNotFound() throws GenericApplicationException {
     List<ResponseByCountry> result = countriesAirportsRunwaysServiceImpl.getListOfRunwaysByCountryCodeOrName("OH");
     assertNotNull(result);
     assertTrue(result.isEmpty());
