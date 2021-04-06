@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -124,13 +123,10 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
       throw new GenericApplicationException(message);
     }
 
-    Map<String, ResponseAirport> sortMap = sortByValueCount(mapOfAirports);
-    return sortMap.entrySet().stream().limit(10).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-  }
-
-  private Map<String, ResponseAirport> sortByValueCount(final Map<String, ResponseAirport> homeListMap) {
-    return homeListMap.entrySet().stream()
+    return mapOfAirports.entrySet().stream()
         .sorted((e1, e2) -> Integer.compare(e2.getValue().getTotalNoAirports(), e1.getValue().getTotalNoAirports()))
+        .limit(10)
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
   }
+
 }

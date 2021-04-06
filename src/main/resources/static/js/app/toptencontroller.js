@@ -13,6 +13,9 @@ module.controller("toptencontroller", [ "$scope", "commonservice",
 					var itr = Object.keys(obj);
 					for (var k = 0; k < itr.length; k++) {
 							var row = table.insertRow(-1);
+							var srno = row.insertCell(-1);
+							srno.innerHTML = (k+1);
+							row.appendChild(srno);
 							var cell0 = row.insertCell(-1);
 							cell0.innerHTML = itr[k];
 							row.appendChild(cell0);
