@@ -1,4 +1,4 @@
-package com.accenture.model;
+package com.countriesairportsrunways.model;
 
 import lombok.Getter;
 import lombok.Setter;

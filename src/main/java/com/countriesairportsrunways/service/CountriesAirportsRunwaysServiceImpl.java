@@ -1,4 +1,4 @@
-package com.accenture.service;
+package com.countriesairportsrunways.service;
 
 import java.io.File;
 import java.io.FileReader;
@@ -15,11 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.accenture.model.Airports;
-import com.accenture.model.ResponseAirport;
-import com.accenture.model.ResponseByCountry;
-import com.accenture.service.exceptions.GenericApplicationException;
-import com.accenture.service.helper.CsvReaderHelper;
+import com.countriesairportsrunways.model.Airports;
+import com.countriesairportsrunways.model.ResponseAirport;
+import com.countriesairportsrunways.model.ResponseByCountry;
+import com.countriesairportsrunways.service.exceptions.GenericApplicationException;
+import com.countriesairportsrunways.service.helper.CsvReaderHelper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
@@ -48,13 +48,13 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
 
     List<Airports> listOfAirports = getListOfAirportsByCountry(countryCode);
 
-    File fileRunways = CsvReaderHelper.retrieveFile("com/accenture/runways.csv");
+    File fileRunways = CsvReaderHelper.retrieveFile("com/countriesairportsrunways/runways.csv");
     return populateOutputByCountry(countryCode, countryName, listOfAirports, fileRunways);
 
   }
 
   private List<Airports> getListOfAirportsByCountry(String[] countryCode) {
-    List<String[]> allAirports = CsvReaderHelper.completeUrlAndFileRead("com/accenture/airports.csv");
+    List<String[]> allAirports = CsvReaderHelper.completeUrlAndFileRead("com/countriesairportsrunways/airports.csv");
     List<Airports> listOfAirports = new ArrayList<>();
 
     allAirports.forEach(x -> {
@@ -95,7 +95,7 @@ public class CountriesAirportsRunwaysServiceImpl implements CountriesAirportsRun
   @Override
   public Map<String, ResponseAirport> getTopTenCountriesHavingMaxAirports() throws GenericApplicationException {
 
-    File fileAirports = CsvReaderHelper.retrieveFile("com/accenture/airports.csv");
+    File fileAirports = CsvReaderHelper.retrieveFile("com/countriesairportsrunways/airports.csv");
 
     Map<String, ResponseAirport> mapOfAirports = new HashMap<>();
     try (CSVReader reader = new CSVReader(new FileReader(fileAirports))) {

@@ -1,4 +1,4 @@
-package com.accenture.service.helper;
+package com.countriesairportsrunways.service.helper;
 
 import java.io.File;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.accenture.controller.CountriesAirportsRunwaysController;
+import com.countriesairportsrunways.controller.CountriesAirportsRunwaysController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
@@ -29,7 +29,7 @@ public class CsvReaderHelper {
   }
 
   static {
-    csvReadOutput = completeUrlAndFileRead("com/accenture/countries.csv");
+    csvReadOutput = completeUrlAndFileRead("com/countriesairportsrunways/countries.csv");
   }
 
   public static List<String[]> completeUrlAndFileRead(String nameOfFile) {

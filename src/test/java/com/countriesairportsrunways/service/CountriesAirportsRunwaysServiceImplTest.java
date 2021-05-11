@@ -1,4 +1,4 @@
-package com.accenture.service;
+package com.countriesairportsrunways.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -15,9 +15,10 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.accenture.model.ResponseAirport;
-import com.accenture.model.ResponseByCountry;
-import com.accenture.service.exceptions.GenericApplicationException;
+import com.countriesairportsrunways.model.ResponseAirport;
+import com.countriesairportsrunways.model.ResponseByCountry;
+import com.countriesairportsrunways.service.CountriesAirportsRunwaysServiceImpl;
+import com.countriesairportsrunways.service.exceptions.GenericApplicationException;
 
 @RunWith(SpringRunner.class)
 public class CountriesAirportsRunwaysServiceImplTest {

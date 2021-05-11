@@ -1,4 +1,4 @@
-package com.accenture.controller;
+package com.countriesairportsrunways.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.model.ResponseAirport;
-import com.accenture.model.ResponseByCountry;
-import com.accenture.service.CountriesAirportsRunwaysService;
-import com.accenture.service.exceptions.GenericApplicationException;
+import com.countriesairportsrunways.model.ResponseAirport;
+import com.countriesairportsrunways.model.ResponseByCountry;
+import com.countriesairportsrunways.service.CountriesAirportsRunwaysService;
+import com.countriesairportsrunways.service.exceptions.GenericApplicationException;
 
 
 @RestController

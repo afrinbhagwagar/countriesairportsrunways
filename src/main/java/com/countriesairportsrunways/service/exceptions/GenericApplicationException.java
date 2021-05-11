@@ -1,4 +1,4 @@
-package com.accenture.service.exceptions;
+package com.countriesairportsrunways.service.exceptions;
 
 public class GenericApplicationException extends Exception{
 
